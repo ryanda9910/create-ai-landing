@@ -27,26 +27,26 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Generator smoke test
-        run: |
-          for fw in nextjs astro vite-react vanilla; do
-            node -e "
-              import('./dist/generator.js').then(({ generateProject }) =>
-                generateProject(
-                  './templates',
-                  '/tmp/test-' + '$fw',
-                  {
-                    BRAND_NAME: 'Test Brand', BRAND_SLUG: 'test-brand',
-                    TAGLINE: 'Test tagline.', INDUSTRY: 'other',
-                    CITY: 'Jakarta', PRIMARY_COLOR: '#0A0A0B',
-                    ACCENT_COLOR: '#D4A574', DOMAIN: 'test.com',
-                    EMAIL: 'test@test.com', YEAR: '2026', FRAMEWORK: '$fw'
-                  },
-                  '$fw'
-                ).then(() => console.log('✓ $fw')).catch(e => { console.error(e); process.exit(1); })
-              )
-            "
-          done
+  e2e:
+    name: E2E — 25 framework × ui-lib combos
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Run E2E tests
+        run: pnpm test:e2e
 
   commitlint:
     name: Commit Lint
