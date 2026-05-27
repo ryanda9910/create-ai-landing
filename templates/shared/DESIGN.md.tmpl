@@ -6,12 +6,19 @@
 
 ---
 
-## 1. Brand Identity
+## 0. Design Theme: {{DESIGN_THEME}}
+
+{{DESIGN_THEME_NOTES}}
+
+---
+
+## 1. {{IDENTITY_LABEL}}
 
 **Name:** {{BRAND_NAME}}
 **Location:** {{CITY}}
 **Industry:** {{INDUSTRY}}
 **Tagline:** {{TAGLINE}}
+**Profile type:** {{PROFILE_TYPE}}
 
 **Voice:** [Describe: formal/casual, technical/accessible, warm/crisp]
 **Feel:** [Describe: boutique/bold/minimal/editorial]
@@ -38,6 +45,8 @@
 --color-danger:       #EF4444;
 ```
 
+{{FIGMA_COLORS_SECTION}}
+
 **Rules:**
 - NEVER hardcode hex values in components
 - NEVER use Tailwind arbitrary color values (`bg-[#hex]`)
@@ -60,9 +69,11 @@ text-small: [size/line-height]
 text-mono:  [size/font-family]
 ```
 
+{{FIGMA_TYPOGRAPHY_SECTION}}
+
 **Rules:**
 - Headlines ≤ 10 words
-- Serif/display for hero, section headings
+- Serif/display for hero, section headings (see theme guidance above)
 - Mono for specs, timestamps, technical data
 - NO mixed case within a single text element
 
@@ -93,7 +104,7 @@ Page max-width: `max-w-7xl mx-auto px-6 md:px-12`
 
 ### Button
 ```tsx
-<Button variant="primary" size="lg">Start a project</Button>
+<Button variant="primary" size="lg">{{CTA_LABEL}}</Button>
 <Button variant="secondary" size="md">See the work</Button>
 ```
 - `primary`: filled accent background
@@ -152,9 +163,9 @@ Order of sections on the landing page:
 2. **Works / Portfolio** — grid showcase, cover + preview
 3. **Services** — 3 pillars, specific descriptions
 4. **Process** — steps with durations and deliverables
-5. **Studio / About** — location, gear, specifics
+5. **{{ABOUT_LABEL}}** — location, background, specifics
 6. **Clients** — logo wall or testimonials
-7. **Contact** — inquiry form
+7. **Contact** — {{CTA_CONTEXT}}
 
 ---
 

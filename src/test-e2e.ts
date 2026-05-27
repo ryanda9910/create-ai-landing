@@ -26,6 +26,8 @@ const VARS = {
   YEAR:          '2026',
   FRAMEWORK:     '',
   UI_LIB:        '',
+  DESIGN_THEME:  'minimalist',
+  PROFILE_TYPE:  'brand',
 };
 
 // All valid combinations

@@ -4,6 +4,9 @@ import pc from 'picocolors';
 import path from 'path';
 import { fileURLToPath, URL } from 'url';
 import { generateProject } from './generator.js';
+import { THEME_OPTIONS } from './themes.js';
+import { fetchFigmaTokens } from './figma.js';
+import type { FigmaTokens } from './figma.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const pkg = JSON.parse(
@@ -83,9 +86,26 @@ async function main() {
   });
   if (p.isCancel(uiLib)) { p.cancel('Cancelled.'); process.exit(0); }
 
+  const designTheme = await p.select({
+    message: 'Design aesthetic',
+    options: THEME_OPTIONS,
+  });
+  if (p.isCancel(designTheme)) { p.cancel('Cancelled.'); process.exit(0); }
+
+  const profileType = await p.select({
+    message: 'Who is this for?',
+    options: [
+      { value: 'brand',      label: 'Brand / Organization', hint: 'studio, agency, SaaS, company' },
+      { value: 'individual', label: 'Individual / Personal',  hint: 'portfolio, freelancer, creator' },
+    ],
+  });
+  if (p.isCancel(profileType)) { p.cancel('Cancelled.'); process.exit(0); }
+
+  const isIndividual = profileType === 'individual';
+
   const brandName = await p.text({
-    message: 'Brand name',
-    placeholder: 'Volta Studio',
+    message: isIndividual ? 'Your name' : 'Brand name',
+    placeholder: isIndividual ? 'Alex Chen' : 'Volta Studio',
     validate: (v) => (!v ? 'Required.' : undefined),
   });
   if (p.isCancel(brandName)) { p.cancel('Cancelled.'); process.exit(0); }
@@ -146,8 +166,21 @@ async function main() {
   });
   if (p.isCancel(email)) { p.cancel('Cancelled.'); process.exit(0); }
 
-  const s = p.spinner();
-  s.start('Generating project...');
+  const figmaUrl = await p.text({
+    message: 'Figma file URL (optional — press Enter to skip)',
+    placeholder: 'https://www.figma.com/design/ABC123/MyDesign',
+  });
+  if (p.isCancel(figmaUrl)) { p.cancel('Cancelled.'); process.exit(0); }
+
+  let figmaToken: string | symbol = '';
+  if (figmaUrl && String(figmaUrl).trim()) {
+    figmaToken = process.env['FIGMA_TOKEN'] ?? await p.text({
+      message: 'Figma Personal Access Token',
+      placeholder: 'fig-pat-...',
+      validate: (v) => (!v ? 'Required when Figma URL is provided.' : undefined),
+    });
+    if (p.isCancel(figmaToken)) { p.cancel('Cancelled.'); process.exit(0); }
+  }
 
   const targetDir = path.resolve(process.cwd(), projectName as string);
   const templatesDir = path.resolve(__dirname, '..', 'templates');
@@ -165,10 +198,30 @@ async function main() {
     YEAR:          new Date().getFullYear().toString(),
     FRAMEWORK:     framework as string,
     UI_LIB:        uiLib as string,
+    DESIGN_THEME:  designTheme as string,
+    PROFILE_TYPE:  profileType as string,
   };
 
+  const s = p.spinner();
+
+  let figmaTokens: FigmaTokens | undefined;
+  const figmaUrlStr = String(figmaUrl ?? '').trim();
+  const figmaTokenStr = String(figmaToken ?? '').trim();
+
+  if (figmaUrlStr && figmaTokenStr) {
+    s.start('Fetching design tokens from Figma...');
+    try {
+      figmaTokens = await fetchFigmaTokens(figmaUrlStr, figmaTokenStr);
+      s.stop(`Figma: extracted ${figmaTokens.colors.length} colors, ${figmaTokens.textStyles.length} text styles.`);
+    } catch (err) {
+      s.stop(pc.yellow(`Figma import skipped: ${String(err)}`));
+    }
+  }
+
+  s.start('Generating project...');
+
   try {
-    await generateProject(templatesDir, targetDir, vars, framework as string, uiLib as string);
+    await generateProject(templatesDir, targetDir, vars, framework as string, uiLib as string, figmaTokens);
     s.stop('Project generated.');
   } catch (err) {
     s.stop('Generation failed.');
