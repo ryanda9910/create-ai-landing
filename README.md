@@ -26,7 +26,7 @@ npm create crucible@latest my-project
 
 ---
 
-Answer 14 questions. Get a landing page scaffold where AI works inside a design system — not against it.
+Answer 15 questions. Get a landing page scaffold where AI works inside a design system — not against it.
 
 ```
 ┌  crucible
@@ -55,6 +55,9 @@ Answer 14 questions. Get a landing page scaffold where AI works inside a design 
 ◇  Primary color (hex)
 │  #0A0A0B
 │
+◇  AI coding tool
+│  Cursor — adds .cursor/rules/
+│
   ... 5 more prompts (industry, city, domain, email, figma url)
 │
 └  ✓ Volta Studio — nextjs scaffold ready. Build something real.
@@ -74,6 +77,7 @@ Every scaffold ships two layers on top of each other:
 | `.claude/skills/copywriter` | Role constraints for copy tasks |
 | `.claude/skills/qa-mobile` | Role constraints for mobile QA |
 | `.claude/skills/ui-designer` | Role constraints for UI work |
+| `.claude/skills/code-review` | Pre-deploy code review: TypeScript, security, performance, hygiene |
 | `scripts/check-design-tokens` | Blocks hardcoded hex values at commit |
 
 **Framework source** — pre-wired to your brand:
@@ -110,6 +114,20 @@ Choose your component system at scaffold time. Deps are injected into `package.j
 | **None** *(plain CSS)* | ✅ | ✅ | ✅ | ✅ |
 
 Provider setup, `components.json`, and `UI_SETUP.md` are generated per choice — no manual wiring.
+
+## AI tool support
+
+Choose your AI coding tool at scaffold time. The same skill rules (copywriter, qa-mobile, code-review) are written in tool-native format:
+
+| AI Tool | Rule location | Invocation |
+|---|---|---|
+| **Claude Code** *(default)* | `.claude/skills/` | `/copywriter`, `/qa-mobile`, `/code-review` |
+| **Cursor** | `.cursor/rules/*.mdc` | `@copywriter`, `@qa-mobile`, `@code-review` |
+| **Windsurf** | `.windsurf/rules/*.md` | Model decides (`trigger: model_decision`) |
+| **Continue** | `.continue/rules/*.md` | Manual invocation |
+| **GitHub Copilot** | `.github/instructions/*.instructions.md` | Applied by file glob |
+
+Claude Code skills (`.claude/skills/`) are always included regardless of which tool you chose.
 
 ## What gets personalized
 

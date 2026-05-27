@@ -110,6 +110,7 @@ export async function generateProject(
   framework: string,
   uiLib: string,
   figmaTokens?: FigmaTokens,
+  aiTool?: string,
 ) {
   if (await fs.pathExists(targetDir)) {
     const files = await fs.readdir(targetDir);
@@ -126,7 +127,15 @@ export async function generateProject(
   const frameworkDir = path.join(templatesDir, 'frameworks', framework);
   await copyTemplate(frameworkDir, targetDir, resolvedVars);
 
-  // Layer 3: UI library overlay (optional)
+  // Layer 3: AI tool rules (optional)
+  if (aiTool && aiTool !== 'none' && aiTool !== 'claude') {
+    const aiToolDir = path.join(templatesDir, 'ai-tools', aiTool);
+    if (await fs.pathExists(aiToolDir)) {
+      await copyTemplate(aiToolDir, targetDir, resolvedVars);
+    }
+  }
+
+  // Layer 4: UI library overlay (optional)
   if (uiLib && uiLib !== 'tailwind') {
     const uiLibDir = path.join(templatesDir, 'ui-libs', uiLib);
     if (await fs.pathExists(uiLibDir)) {

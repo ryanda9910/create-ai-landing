@@ -115,6 +115,12 @@ describe('generateProject — shared layer', () => {
   it('emits GUARDRAILS.md', () => expect(fs.existsSync(path.join(tmpDir, 'GUARDRAILS.md'))).toBe(true));
   it('emits copywriter skill', () =>
     expect(fs.existsSync(path.join(tmpDir, '.claude/skills/copywriter/SKILL.md'))).toBe(true));
+  it('emits qa-mobile skill', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.claude/skills/qa-mobile/SKILL.md'))).toBe(true));
+  it('emits ui-designer skill', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.claude/skills/ui-designer/SKILL.md'))).toBe(true));
+  it('emits code-review skill', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.claude/skills/code-review/SKILL.md'))).toBe(true));
 
   it('interpolates BRAND_NAME into CLAUDE.md', () => {
     const content = fs.readFileSync(path.join(tmpDir, 'CLAUDE.md'), 'utf8');
@@ -526,4 +532,185 @@ describe('generateProject — design theme in DESIGN.md', () => {
     const content = fs.readFileSync(path.join(tmpDir, 'DESIGN.md'), 'utf8');
     expect(content).toContain('border-radius');
   });
+});
+
+// ── generateProject — Layer 3: AI tool rules ─────────────────────────────────
+
+const AI_TOOL_VARS = {
+  BRAND_NAME: 'Prism', BRAND_SLUG: 'prism', TAGLINE: 'Light divided.',
+  INDUSTRY: 'agency', CITY: 'Bali', PRIMARY_COLOR: '#6C5CE7',
+  ACCENT_COLOR: '#00CEFF', DOMAIN: 'prism.studio', EMAIL: 'hi@prism.studio',
+  YEAR: '2026', FRAMEWORK: 'nextjs', UI_LIB: 'none', DESIGN_THEME: 'minimalist', PROFILE_TYPE: 'brand',
+};
+
+function noUnresolvedVars(dir: string) {
+  for (const entry of fs.readdirSync(dir)) {
+    const full = path.join(dir, entry);
+    const content = fs.readFileSync(full, 'utf8');
+    expect(content, `${entry} has unresolved template var`).not.toMatch(/\{\{[A-Z_]+\}\}/);
+  }
+}
+
+describe('generateProject — cursor ai tool', () => {
+  let tmpDir: string;
+
+  beforeEach(async () => {
+    tmpDir = path.join(os.tmpdir(), `crucible-unit-cursor-${Date.now()}`);
+    await generateProject(TEMPLATES_DIR, tmpDir, AI_TOOL_VARS, 'nextjs', 'none', undefined, 'cursor');
+  });
+
+  afterEach(() => fs.removeSync(tmpDir));
+
+  it('emits .cursor/rules/copywriter.mdc', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.cursor/rules/copywriter.mdc'))).toBe(true));
+  it('emits .cursor/rules/qa-mobile.mdc', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.cursor/rules/qa-mobile.mdc'))).toBe(true));
+  it('emits .cursor/rules/code-review.mdc', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.cursor/rules/code-review.mdc'))).toBe(true));
+  it('interpolates BRAND_NAME in cursor rule files', () => {
+    const content = fs.readFileSync(path.join(tmpDir, '.cursor/rules/code-review.mdc'), 'utf8');
+    expect(content).toContain('Prism');
+  });
+  it('no unresolved vars in cursor rule files', () => {
+    noUnresolvedVars(path.join(tmpDir, '.cursor/rules'));
+  });
+  it('still emits shared .claude/skills', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.claude/skills/copywriter/SKILL.md'))).toBe(true));
+});
+
+describe('generateProject — windsurf ai tool', () => {
+  let tmpDir: string;
+
+  beforeEach(async () => {
+    tmpDir = path.join(os.tmpdir(), `crucible-unit-windsurf-${Date.now()}`);
+    await generateProject(TEMPLATES_DIR, tmpDir, AI_TOOL_VARS, 'nextjs', 'none', undefined, 'windsurf');
+  });
+
+  afterEach(() => fs.removeSync(tmpDir));
+
+  it('emits .windsurf/rules/copywriter.md', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.windsurf/rules/copywriter.md'))).toBe(true));
+  it('emits .windsurf/rules/qa-mobile.md', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.windsurf/rules/qa-mobile.md'))).toBe(true));
+  it('emits .windsurf/rules/code-review.md', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.windsurf/rules/code-review.md'))).toBe(true));
+  it('no unresolved vars in windsurf rule files', () => {
+    noUnresolvedVars(path.join(tmpDir, '.windsurf/rules'));
+  });
+  it('code-review.md has trigger: model_decision frontmatter', () => {
+    const content = fs.readFileSync(path.join(tmpDir, '.windsurf/rules/code-review.md'), 'utf8');
+    expect(content).toContain('trigger: model_decision');
+  });
+});
+
+describe('generateProject — continue ai tool', () => {
+  let tmpDir: string;
+
+  beforeEach(async () => {
+    tmpDir = path.join(os.tmpdir(), `crucible-unit-continue-${Date.now()}`);
+    await generateProject(TEMPLATES_DIR, tmpDir, AI_TOOL_VARS, 'nextjs', 'none', undefined, 'continue');
+  });
+
+  afterEach(() => fs.removeSync(tmpDir));
+
+  it('emits .continue/rules/copywriter.md', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.continue/rules/copywriter.md'))).toBe(true));
+  it('emits .continue/rules/qa-mobile.md', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.continue/rules/qa-mobile.md'))).toBe(true));
+  it('emits .continue/rules/code-review.md', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.continue/rules/code-review.md'))).toBe(true));
+  it('no unresolved vars in continue rule files', () => {
+    noUnresolvedVars(path.join(tmpDir, '.continue/rules'));
+  });
+  it('code-review.md has alwaysApply: false frontmatter', () => {
+    const content = fs.readFileSync(path.join(tmpDir, '.continue/rules/code-review.md'), 'utf8');
+    expect(content).toContain('alwaysApply: false');
+  });
+});
+
+describe('generateProject — copilot ai tool', () => {
+  let tmpDir: string;
+
+  beforeEach(async () => {
+    tmpDir = path.join(os.tmpdir(), `crucible-unit-copilot-${Date.now()}`);
+    await generateProject(TEMPLATES_DIR, tmpDir, AI_TOOL_VARS, 'nextjs', 'none', undefined, 'copilot');
+  });
+
+  afterEach(() => fs.removeSync(tmpDir));
+
+  it('emits .github/instructions/copywriter.instructions.md', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.github/instructions/copywriter.instructions.md'))).toBe(true));
+  it('emits .github/instructions/qa-mobile.instructions.md', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.github/instructions/qa-mobile.instructions.md'))).toBe(true));
+  it('emits .github/instructions/code-review.instructions.md', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.github/instructions/code-review.instructions.md'))).toBe(true));
+  it('interpolates BRAND_NAME in code-review.instructions.md', () => {
+    const content = fs.readFileSync(path.join(tmpDir, '.github/instructions/code-review.instructions.md'), 'utf8');
+    expect(content).toContain('Prism');
+  });
+  it('no unresolved vars in copilot instruction files', () => {
+    noUnresolvedVars(path.join(tmpDir, '.github/instructions'));
+  });
+  it('code-review.instructions.md has correct applyTo glob', () => {
+    const content = fs.readFileSync(path.join(tmpDir, '.github/instructions/code-review.instructions.md'), 'utf8');
+    expect(content).toContain("applyTo: '**/*.{tsx,ts,astro}'");
+  });
+});
+
+describe('generateProject — claude ai tool (no extra rule files)', () => {
+  let tmpDir: string;
+
+  beforeEach(async () => {
+    tmpDir = path.join(os.tmpdir(), `crucible-unit-claude-${Date.now()}`);
+    await generateProject(TEMPLATES_DIR, tmpDir, AI_TOOL_VARS, 'nextjs', 'none', undefined, 'claude');
+  });
+
+  afterEach(() => fs.removeSync(tmpDir));
+
+  it('does not emit .cursor dir', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.cursor'))).toBe(false));
+  it('does not emit .windsurf dir', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.windsurf'))).toBe(false));
+  it('does not emit .continue dir', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.continue'))).toBe(false));
+  it('still emits .claude/skills (shared layer)', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.claude/skills/code-review/SKILL.md'))).toBe(true));
+});
+
+describe('generateProject — none ai tool (no extra rule files)', () => {
+  let tmpDir: string;
+
+  beforeEach(async () => {
+    tmpDir = path.join(os.tmpdir(), `crucible-unit-notool-${Date.now()}`);
+    await generateProject(TEMPLATES_DIR, tmpDir, AI_TOOL_VARS, 'nextjs', 'none', undefined, 'none');
+  });
+
+  afterEach(() => fs.removeSync(tmpDir));
+
+  it('does not emit .cursor dir', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.cursor'))).toBe(false));
+  it('does not emit .windsurf dir', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.windsurf'))).toBe(false));
+  it('does not emit .continue dir', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.continue'))).toBe(false));
+  it('does not emit .github/instructions dir', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.github/instructions'))).toBe(false));
+  it('still emits .claude/skills (shared layer)', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.claude/skills/code-review/SKILL.md'))).toBe(true));
+});
+
+describe('generateProject — undefined ai tool (backward compat)', () => {
+  let tmpDir: string;
+
+  beforeEach(async () => {
+    tmpDir = path.join(os.tmpdir(), `crucible-unit-noarg-${Date.now()}`);
+    await generateProject(TEMPLATES_DIR, tmpDir, AI_TOOL_VARS, 'nextjs', 'none');
+  });
+
+  afterEach(() => fs.removeSync(tmpDir));
+
+  it('does not emit .cursor dir', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.cursor'))).toBe(false));
+  it('still emits .claude/skills (shared layer)', () =>
+    expect(fs.existsSync(path.join(tmpDir, '.claude/skills/code-review/SKILL.md'))).toBe(true));
 });

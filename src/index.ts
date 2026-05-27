@@ -166,6 +166,19 @@ async function main() {
   });
   if (p.isCancel(email)) { p.cancel('Cancelled.'); process.exit(0); }
 
+  const aiTool = await p.select({
+    message: 'AI coding tool',
+    options: [
+      { value: 'claude',   label: 'Claude Code',     hint: 'CLAUDE.md + skills already included' },
+      { value: 'cursor',   label: 'Cursor',           hint: 'adds .cursor/rules/' },
+      { value: 'windsurf', label: 'Windsurf',         hint: 'adds .windsurf/rules/' },
+      { value: 'continue', label: 'Continue',         hint: 'adds .continue/rules/' },
+      { value: 'copilot',  label: 'GitHub Copilot',   hint: 'adds .github/instructions/' },
+      { value: 'none',     label: 'None / Other',     hint: 'no tool-specific files' },
+    ],
+  });
+  if (p.isCancel(aiTool)) { p.cancel('Cancelled.'); process.exit(0); }
+
   const figmaUrl = await p.text({
     message: 'Figma file URL (optional — press Enter to skip)',
     placeholder: 'https://www.figma.com/design/ABC123/MyDesign',
@@ -200,6 +213,7 @@ async function main() {
     UI_LIB:        uiLib as string,
     DESIGN_THEME:  designTheme as string,
     PROFILE_TYPE:  profileType as string,
+    AI_TOOL:       aiTool as string,
   };
 
   const s = p.spinner();
@@ -221,7 +235,7 @@ async function main() {
   s.start('Generating project...');
 
   try {
-    await generateProject(templatesDir, targetDir, vars, framework as string, uiLib as string, figmaTokens);
+    await generateProject(templatesDir, targetDir, vars, framework as string, uiLib as string, figmaTokens, aiTool as string);
     s.stop('Project generated.');
   } catch (err) {
     s.stop('Generation failed.');

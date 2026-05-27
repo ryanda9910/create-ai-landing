@@ -1,0 +1,55 @@
+---
+applyTo: '**/*.{tsx,ts,astro}'
+---
+
+# Code Review — {{BRAND_NAME}}
+
+Open `GUARDRAILS.md` (all sections) and `CLAUDE.md` (performance targets + workflow) before reviewing anything.
+
+## Pre-flight
+
+Gate items — all must pass before the review proceeds:
+
+- [ ] `pnpm precommit` exits 0 (runs lint + typecheck + check:tokens)
+- [ ] `tsc --noEmit` — zero TypeScript errors in `src/`
+- [ ] No `console.log` in any file under `src/` (`grep -r "console.log" src/`)
+
+## TypeScript Quality
+
+- [ ] No `any` type annotations — use `unknown` + narrowing instead
+- [ ] No `as unknown` casts except at trust boundaries (e.g. `req.json() as unknown` at the API entry point)
+- [ ] No `!` non-null assertions without a comment explaining why null is impossible
+- [ ] Props interfaces are explicit — no implicit `{}` or `object` types
+- [ ] All event handlers have a typed `e` parameter (not `e: any`)
+
+## Correctness
+
+- [ ] Every `useEffect` that sets up a listener or subscription has a cleanup return
+- [ ] Lists rendered with `.map()` have stable `key` props — not array index when the list can reorder
+- [ ] `handleSubmit` calls `e.preventDefault()` before any async work
+- [ ] Loading state is set before `await`, reset in both success and error branches — no stuck spinner
+- [ ] *(Next.js only)* API routes return `NextResponse.json()` with correct status codes — 400 for validation failure, 500 for unhandled errors
+
+## Security
+
+- [ ] All form submissions validated server-side (reference: `GUARDRAILS.md > Form`)
+- [ ] *(Next.js only)* Zod schema validates every API route input before use
+- [ ] *(Next.js only)* Honeypot field present and checked server-side (`honeypot: z.string().max(0)`)
+- [ ] No env vars leaked to the client bundle — `NEXT_PUBLIC_` prefix only for intentionally public vars
+- [ ] No hardcoded API keys, tokens, or credentials in any source file
+- [ ] External `<a target="_blank">` links have `rel="noopener noreferrer"`
+
+## Performance
+
+- [ ] Heavy libraries (audio player, chart, map embed) imported with `dynamic()` / lazy import, not at the top of a component
+- [ ] *(Next.js only)* `next/image` used for all images — `priority` prop set ONLY on the hero image
+- [ ] No synchronous operations in React render (no unsorted/unparsed data in render without `useMemo`)
+- [ ] No new npm package added without updating `docs/DESIGN-DECISIONS.md` with the rationale
+
+## Code Hygiene
+
+- [ ] No dead imports
+- [ ] No commented-out code blocks left in production files (TODO comments with a date are acceptable)
+- [ ] Components export one named export — no default exports
+- [ ] Component folders follow `ComponentName/ComponentName.tsx` + `index.ts` pattern
+- [ ] `cn()` from `@/lib/utils` used for all conditional className — no string concatenation

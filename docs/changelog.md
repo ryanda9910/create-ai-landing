@@ -2,6 +2,22 @@
 
 All notable changes documented here. Format: [Keep a Changelog](https://keepachangelog.com/).
 
+## [1.4.0] — 2026-05-27
+
+### Added
+- **AI tool selection**: new CLI prompt — choose Claude Code, Cursor, Windsurf, Continue, GitHub Copilot, or None
+- **Cursor rules**: `.cursor/rules/copywriter.mdc`, `qa-mobile.mdc`, `code-review.mdc` generated when Cursor is selected
+- **Windsurf rules**: `.windsurf/rules/` equivalents with `trigger: model_decision` frontmatter
+- **Continue rules**: `.continue/rules/` equivalents with `alwaysApply: false` frontmatter
+- **GitHub Copilot instructions**: `.github/instructions/*.instructions.md` with `applyTo` glob frontmatter
+- **`/code-review` skill**: new Claude Code skill covering TypeScript quality, correctness, security, performance, and code hygiene — distinct from `/ui-designer` and `/qa-mobile`
+- Layer 3 in template generator: AI tool rules applied after shared + framework layers, before UI lib overlay
+- 36 new unit tests (106 total): AI tool layer coverage for all 4 tools + negative tests for `claude`/`none`/`undefined`
+
+### Changed
+- CLI prompts: 14 → 15 (AI coding tool added before Figma URL)
+- `generateProject` signature: optional `aiTool` parameter added
+
 ## [1.3.0] — 2026-05-27
 
 ### Added

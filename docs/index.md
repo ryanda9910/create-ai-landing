@@ -43,7 +43,11 @@ features:
 
   - icon: 🤖
     title: AI Skills System
-    details: Role-based Claude Code constraints. /copywriter enforces voice rules. /qa-mobile runs the tap-target checklist. /ui-designer enforces design tokens.
+    details: Role-based constraints. /copywriter enforces voice rules. /qa-mobile runs the tap-target checklist. /ui-designer enforces design tokens. /code-review gates TypeScript quality, security, and performance.
+
+  - icon: 🛠️
+    title: 5 AI Tool Integrations
+    details: Claude Code, Cursor, Windsurf, Continue, or GitHub Copilot. Pick at scaffold time — same skill rules written in tool-native format (.cursor/rules/, .windsurf/rules/, .continue/rules/, .github/instructions/).
 
   - icon: 🔒
     title: Token Enforcement

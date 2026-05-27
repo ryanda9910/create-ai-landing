@@ -66,6 +66,37 @@ Enforces design system rules when implementing components.
 /ui-designer Build the Works section with 6 project cards
 ```
 
+## /code-review
+
+Reviews code for correctness, TypeScript quality, security, and performance. Complements `/ui-designer` (design tokens) and `/qa-mobile` (mobile viewport) — does not overlap with either.
+
+**Checks:**
+- Pre-flight gate: `pnpm precommit`, `tsc --noEmit`, no `console.log` in `src/`
+- TypeScript: no `any`, no bare `!` non-null assertions, typed event handlers, explicit prop interfaces
+- Correctness: `useEffect` cleanup, stable `.map()` keys, `e.preventDefault()` before async, stuck-spinner prevention
+- Security: server-side validation, Zod schema, honeypot, no leaked env vars, `rel="noopener noreferrer"` on external links
+- Performance: lazy imports for heavy libraries, `next/image` usage, no sync ops in render
+- Code hygiene: no dead imports, no commented-out code, named exports, `cn()` for classNames
+
+**Usage:**
+```
+/code-review Review the Contact component before merge
+/code-review Full pre-deploy code review
+```
+
+## AI tool rule mirrors
+
+If you selected an AI coding tool during scaffolding, the same skill rules are mirrored into tool-native formats:
+
+| AI Tool | Rule location | Invocation |
+|---|---|---|
+| **Cursor** | `.cursor/rules/*.mdc` | `@copywriter`, `@qa-mobile`, `@code-review` |
+| **Windsurf** | `.windsurf/rules/*.md` | Model picks rules automatically (`model_decision`) |
+| **Continue** | `.continue/rules/*.md` | Manual invocation |
+| **GitHub Copilot** | `.github/instructions/*.instructions.md` | Applied by file glob |
+
+The Claude Code skills in `.claude/skills/` are always included regardless of which AI tool you chose.
+
 ## Adding a custom skill
 
 Create `.claude/skills/your-skill/SKILL.md`:
