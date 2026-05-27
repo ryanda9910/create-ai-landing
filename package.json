@@ -31,7 +31,9 @@
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "release": "pnpm build && pnpm publish --access public",
-    "test:e2e": "tsx src/test-e2e.ts"
+    "test:unit": "vitest run src/generator.test.ts",
+    "test:e2e": "tsx src/test-e2e.ts",
+    "test": "pnpm test:unit && pnpm test:e2e"
   },
   "lint-staged": {
     "src/**/*.ts": [
@@ -63,6 +65,7 @@
     "lint-staged": "^17.0.5",
     "tsx": "^4.19.0",
     "typescript": "^5.0.0",
-    "vitepress": "^1.6.4"
+    "vitepress": "^1.6.4",
+    "vitest": "^2.1.9"
   }
 }

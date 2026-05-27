@@ -12,7 +12,7 @@ interface UILibConfig {
   frameworkExtraDevDeps?: Partial<Record<string, Record<string, string>>>;
 }
 
-function interpolate(content: string, vars: Record<string, string>): string {
+export function interpolate(content: string, vars: Record<string, string>): string {
   return content.replace(/\{\{([A-Z_]+)\}\}/g, (_, key) => vars[key] ?? `{{${key}}}`);
 }
 
