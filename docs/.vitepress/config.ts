@@ -6,10 +6,14 @@ export default defineConfig({
   base: '/crucible/',
 
   head: [
+    ['link', { rel: 'icon', href: '/crucible/favicon.ico', sizes: '16x16 32x32 48x48', type: 'image/x-icon' }],
+    ['link', { rel: 'icon', href: '/crucible/icon-crucible.svg', type: 'image/svg+xml' }],
+    ['link', { rel: 'apple-touch-icon', href: '/crucible/apple-touch-icon.png' }],
     ['meta', { name: 'theme-color', content: '#f97316' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: 'crucible' }],
     ['meta', { property: 'og:description', content: 'Scaffold a landing page with a full AI agent system built in' }],
+    ['meta', { property: 'og:image', content: 'https://ryanda9910.github.io/crucible/icon-192.png' }],
   ],
 
   themeConfig: {

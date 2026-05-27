@@ -2,6 +2,14 @@
   "name": "create-crucible",
   "version": "1.1.0",
   "description": "Scaffold a landing page with a full AI agent system built in — DESIGN.md, GUARDRAILS, skills, token enforcement",
+  "homepage": "https://ryanda9910.github.io/crucible/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ryanda9910/crucible.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ryanda9910/crucible/issues"
+  },
   "type": "module",
   "bin": {
     "create-crucible": "./dist/index.js"

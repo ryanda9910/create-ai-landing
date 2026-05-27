@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/public/logo-crucible.svg" width="120" alt="crucible logo" />
+<img src="https://raw.githubusercontent.com/ryanda9910/crucible/main/docs/public/logo-crucible.svg" width="120" alt="crucible logo" />
 
 # crucible
 
