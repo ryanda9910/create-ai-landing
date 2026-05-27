@@ -1,0 +1,161 @@
+# Design System — {{BRAND_NAME}}
+
+> Source of truth for all visual decisions.
+> AI agents MUST read this file before writing any UI code.
+> Propose additions here before implementing new patterns.
+
+---
+
+## 1. Brand Identity
+
+**Name:** {{BRAND_NAME}}
+**Location:** {{CITY}}
+**Industry:** {{INDUSTRY}}
+**Tagline:** {{TAGLINE}}
+
+**Voice:** [Describe: formal/casual, technical/accessible, warm/crisp]
+**Feel:** [Describe: boutique/bold/minimal/editorial]
+
+---
+
+## 2. Color Tokens
+
+```css
+/* Map these in tailwind.config.ts and src/styles/tokens.css */
+
+--color-bg:           {{PRIMARY_COLOR}};   /* Page background */
+--color-surface:      [slightly lighter];   /* Card / elevated surface */
+--color-border:       [subtle line color];
+
+--color-primary:      [main text color];
+--color-text:         [body text, slightly muted];
+--color-text-muted:   [secondary text];
+
+--color-accent:       {{ACCENT_COLOR}};    /* Primary CTA, highlights */
+--color-accent-2:     [secondary accent];  /* Optional: hover states */
+
+--color-success:      #22C55E;
+--color-danger:       #EF4444;
+```
+
+**Rules:**
+- NEVER hardcode hex values in components
+- NEVER use Tailwind arbitrary color values (`bg-[#hex]`)
+- ALWAYS use token name (e.g. `bg-accent`, `text-primary`)
+
+---
+
+## 3. Typography
+
+**Display / Headline:** [Font name] — `font-display` class
+**Body:** [Font name] — default
+**Mono / Technical:** [Font name] — `font-mono` class
+
+```
+text-h1:    [size/weight/line-height]
+text-h2:    [size/weight/line-height]
+text-h3:    [size/weight/line-height]
+text-body:  [size/line-height]
+text-small: [size/line-height]
+text-mono:  [size/font-family]
+```
+
+**Rules:**
+- Headlines ≤ 10 words
+- Serif/display for hero, section headings
+- Mono for specs, timestamps, technical data
+- NO mixed case within a single text element
+
+---
+
+## 4. Spacing Scale
+
+Use Tailwind's default scale. No arbitrary values.
+
+```
+4px  = gap-1
+8px  = gap-2
+12px = gap-3
+16px = gap-4
+24px = gap-6
+32px = gap-8
+48px = gap-12
+64px = gap-16
+96px = gap-24
+```
+
+Section padding: `py-24 md:py-32`
+Page max-width: `max-w-7xl mx-auto px-6 md:px-12`
+
+---
+
+## 5. Component Patterns
+
+### Button
+```tsx
+<Button variant="primary" size="lg">Start a project</Button>
+<Button variant="secondary" size="md">See the work</Button>
+```
+- `primary`: filled accent background
+- `secondary`: ghost / outline
+- Min height 44px (WCAG tap target)
+- Renders `<a>` when `href` provided
+
+### Card / Surface
+- `bg-surface` background
+- `border border-border` subtle outline
+- `rounded-sm` (2px) — NOT `rounded-xl`
+
+### Labels / Eyebrow text
+```tsx
+<p className="label-uppercase">Section Title</p>
+```
+- All caps, tracked wide, small size
+- Use for section labels, tags, meta text
+
+---
+
+## 6. Motion
+
+- Default transition: `duration-300 ease-out`
+- Scroll reveal: `opacity-0 → opacity-100`, `translateY(20px) → 0`
+- NO bounce, NO elastic, NO spring physics
+- ALWAYS check `prefers-reduced-motion`
+
+```tsx
+const reduced = useReducedMotion();
+// Skip animation if reduced is true
+```
+
+---
+
+## 7. Anti-Patterns
+
+These are FORBIDDEN. No exceptions.
+
+- [ ] Purple-pink gradients
+- [ ] Border radius > 8px on cards
+- [ ] "We are passionate about [X]" in copy
+- [ ] Stock-looking hero images (use branded visuals)
+- [ ] 3-column equal grids with generic icons
+- [ ] Centered single CTA on a white background
+- [ ] Vague copy ("professional", "innovative", "world-class")
+- [ ] `text-[#hex]`, `bg-[#hex]`, `p-[18px]` in components
+
+---
+
+## 8. Section Structure
+
+Order of sections on the landing page:
+
+1. **Hero** — headline (serif), tagline, primary CTA, media background
+2. **Works / Portfolio** — grid showcase, cover + preview
+3. **Services** — 3 pillars, specific descriptions
+4. **Process** — steps with durations and deliverables
+5. **Studio / About** — location, gear, specifics
+6. **Clients** — logo wall or testimonials
+7. **Contact** — inquiry form
+
+---
+
+*Last updated: {{YEAR}}*

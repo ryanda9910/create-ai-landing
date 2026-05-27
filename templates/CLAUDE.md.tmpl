@@ -1,0 +1,50 @@
+# {{BRAND_NAME}} Landing Page
+
+## Project
+Landing page for {{BRAND_NAME}} — {{INDUSTRY}}, based in {{CITY}}.
+Primary conversion target: inquiry form / "Start a project" CTA.
+
+## Tech Stack
+- Next.js 14 (App Router)
+- TypeScript strict mode
+- Tailwind CSS (mapped to design tokens)
+- Deploy: Vercel
+
+## Design System
+**REQUIRED**: Read `DESIGN.md` before touching any UI file.
+- Colors: ONLY use tokens from DESIGN.md section 2
+- Typography: serif for headlines, mono for technical data
+- Spacing: ONLY from the scale in section 4
+- Components: follow patterns in section 5
+- Motion: 300ms default, NO bounce/elastic
+
+If you need a pattern not in DESIGN.md → STOP, propose the addition,
+wait for approval, then implement.
+
+## Coding Conventions
+- Components in `src/components/`, one folder per component
+- Use `cn()` util for conditional classes
+- No inline styles, no Tailwind arbitrary values (`[#hex]`, `[18px]`)
+- Images: `next/image`, priority only for hero, alt text always required
+
+## Performance Targets
+- Lighthouse Performance > 85 (mobile)
+- LCP < 3s on 3G
+- No CLS from media (reserve space before load)
+- Total initial load < 3MB
+
+## Accessibility
+- All tap targets ≥ 44px (WCAG)
+- Video/animation must respect `prefers-reduced-motion`
+- Color contrast: minimum AA
+- Forms: proper labels, keyboard navigable, inline error states
+
+## Workflow
+- Before commit: `pnpm precommit` (lint + typecheck + check:tokens)
+- Test on mobile first
+- Check on slow 3G — key interactions must remain usable
+
+## Reference Files (read before coding)
+- `DESIGN.md` — design system source of truth
+- `GUARDRAILS.md` — learned constraints, failure patterns
+- `docs/DESIGN-DECISIONS.md` — architectural decision log

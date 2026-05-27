@@ -1,0 +1,26 @@
+# Design Decisions — {{BRAND_NAME}}
+
+Log of architectural and design decisions. Record the WHY, not just the what.
+
+---
+
+## Format
+
+```
+### [Short title]
+**Date:** YYYY-MM-DD
+**Decision:** What was decided
+**Why:** The reason — constraint, tradeoff, or explicit preference
+**Alternatives considered:** What was rejected and why
+```
+
+---
+
+### Initial setup
+
+**Date:** {{YEAR}}-01-01
+**Decision:** Next.js 14 App Router + TypeScript strict + Tailwind CSS
+**Why:** App Router gives streaming SSR for LCP; TypeScript eliminates runtime trial-error loops with AI; Tailwind with token mapping enforces design system mechanically.
+**Alternatives considered:** Astro (rejected: less flexible for forms/interactivity); plain CSS (rejected: no design-token enforcement at build time).
+
+---

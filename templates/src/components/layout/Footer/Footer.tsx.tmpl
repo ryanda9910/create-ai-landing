@@ -1,0 +1,58 @@
+import Link from 'next/link';
+import { SITE } from '@/lib/site';
+
+export function Footer() {
+  return (
+    <footer className="border-t border-border bg-bg">
+      <div className="container-page py-16">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
+          <div className="md:col-span-2">
+            <p className="font-display text-h3 text-primary mb-4">{SITE.name}</p>
+            <p className="text-body text-text-muted max-w-sm">
+              {/* Add one-liner brand description */}
+              {SITE.city} — operating since {SITE.year}.
+            </p>
+            <address className="not-italic mt-8 text-small text-text-muted">
+              {/* Add physical address if applicable */}
+              <a
+                href={`mailto:${SITE.email}`}
+                className="hover:text-primary inline-block py-3.5"
+              >
+                {SITE.email}
+              </a>
+            </address>
+          </div>
+
+          <div>
+            <p className="label-uppercase">Site</p>
+            <nav aria-label="Footer navigation" className="flex flex-col gap-3">
+              <Link href="#works" className="text-body text-text hover:text-primary py-2.5 block">Works</Link>
+              <Link href="#services" className="text-body text-text hover:text-primary py-2.5 block">Services</Link>
+              <Link href="#process" className="text-body text-text hover:text-primary py-2.5 block">Process</Link>
+              <Link href="#contact" className="text-body text-text hover:text-primary py-2.5 block">Contact</Link>
+            </nav>
+          </div>
+
+          <div>
+            <p className="label-uppercase">Follow</p>
+            <nav aria-label="Social media links" className="flex flex-col gap-3">
+              {SITE.social.instagram !== '#' && (
+                <a href={SITE.social.instagram} rel="noopener noreferrer" className="text-body text-text hover:text-primary py-2.5 block">Instagram</a>
+              )}
+              {/* Add more social links here */}
+            </nav>
+          </div>
+        </div>
+
+        <div className="mt-16 pt-8 border-t border-border flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <p className="text-small text-text-muted font-mono">
+            Built with Claude Code + Next.js 14
+          </p>
+          <p className="text-small text-text-muted">
+            © {SITE.year} {SITE.name}. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
