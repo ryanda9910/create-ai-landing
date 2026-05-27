@@ -6,7 +6,7 @@ Scaffold a landing page with a full AI agent system built in.
 npx @aldoryanda/create-ai-landing my-project
 ```
 
-Answers 9 questions → generates a complete Next.js 14 landing page with:
+Answers 9 questions → generates a complete landing page with:
 
 - `CLAUDE.md` — AI session briefing, pre-filled with your brand
 - `DESIGN.md` — design system ground truth (colors, typography, anti-patterns)
@@ -17,6 +17,15 @@ Answers 9 questions → generates a complete Next.js 14 landing page with:
 - Full component skeletons: Hero, Services, Process, Contact, Header, Footer
 - API route with Zod validation + honeypot
 - `src/lib/site.ts` — single source of truth for brand name, domain, email
+
+## Supported frameworks
+
+| Framework | Command |
+|---|---|
+| Next.js 14 (App Router) | `npx @ryanda9910/create-ai-landing` → select `nextjs` |
+| Astro 4 | → select `astro` |
+| Vite + React | → select `vite-react` |
+| Vanilla JS (Vite dev server) | → select `vanilla` |
 
 ## What gets personalized
 

@@ -1,0 +1,38 @@
+export interface ProcessStep {
+  number: string;
+  title: string;
+  description: string;
+  duration: string;
+  detail: string;
+}
+
+export const PROCESS_STEPS: ProcessStep[] = [
+  {
+    number: '01',
+    title: 'Brief',
+    description: '[What happens in this phase. What info you need from the client.]',
+    duration: '1–2 days',
+    detail: '[Specific deliverable: e.g. "Written brief + reference playlist"]',
+  },
+  {
+    number: '02',
+    title: '[Phase name]',
+    description: '[Description]',
+    duration: '[X–Y days]',
+    detail: '[Deliverable]',
+  },
+  {
+    number: '03',
+    title: '[Phase name]',
+    description: '[Description]',
+    duration: '[Agreed in brief]',
+    detail: '[Deliverable]',
+  },
+  {
+    number: '04',
+    title: 'Delivery',
+    description: '[How final files are delivered, what formats, revision policy.]',
+    duration: '1 day after approval',
+    detail: '[e.g. "Stems, mixed files, masters — via download link"]',
+  },
+];

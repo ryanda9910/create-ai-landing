@@ -1,0 +1,30 @@
+{
+  "name": "{{BRAND_SLUG}}",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "check:tokens": "tsx scripts/check-design-tokens.ts",
+    "precommit": "pnpm typecheck && pnpm check:tokens"
+  },
+  "dependencies": {
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^3.4.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.0.0",
+    "vite": "^5.4.0"
+  }
+}

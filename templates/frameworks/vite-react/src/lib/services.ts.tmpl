@@ -1,0 +1,41 @@
+export interface Service {
+  id: string;
+  title: string;
+  tagline: string;
+  description: string;
+  deliverables: string[];
+}
+
+export const SERVICES: Service[] = [
+  {
+    id: 'service-1',
+    title: '[Service Title]',
+    tagline: '[One-line punchy description]',
+    description: '[2-3 sentences. Be specific — name formats, specs, deliverables. Avoid vague adjectives.]',
+    deliverables: [
+      '[Deliverable 1]',
+      '[Deliverable 2]',
+      '[Deliverable 3]',
+    ],
+  },
+  {
+    id: 'service-2',
+    title: '[Service Title]',
+    tagline: '[One-line punchy description]',
+    description: '[2-3 sentences. Specific over vague.]',
+    deliverables: [
+      '[Deliverable 1]',
+      '[Deliverable 2]',
+    ],
+  },
+  {
+    id: 'service-3',
+    title: '[Service Title]',
+    tagline: '[One-line punchy description]',
+    description: '[2-3 sentences. Specific over vague.]',
+    deliverables: [
+      '[Deliverable 1]',
+      '[Deliverable 2]',
+    ],
+  },
+];

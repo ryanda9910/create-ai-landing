@@ -1,0 +1,100 @@
+---
+import { SITE } from '../../lib/site';
+---
+
+<section id="contact" class="py-24 md:py-32">
+  <div class="container-page">
+    <div class="grid grid-cols-1 gap-16 md:grid-cols-2">
+      <div>
+        <p class="label-uppercase mb-6">Contact</p>
+        <h2 class="font-display text-h1 text-primary mb-8">Start a project.</h2>
+        <p class="text-body text-text-muted max-w-sm mb-8">
+          Tell us what you're working on. We'll get back within 48 hours.
+        </p>
+        <a href={`mailto:${SITE.email}`} class="font-mono text-mono text-accent hover:underline inline-block py-2">
+          {SITE.email}
+        </a>
+      </div>
+
+      <form id="inquiry-form" class="flex flex-col gap-8" novalidate>
+        <input type="text" name="website" tabindex="-1" aria-hidden="true" class="sr-only" autocomplete="off" />
+
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div class="flex flex-col gap-2">
+            <label for="name" class="label-uppercase">Name</label>
+            <input id="name" name="name" type="text" placeholder="Your name" autocomplete="name" required class="input-field" />
+          </div>
+          <div class="flex flex-col gap-2">
+            <label for="email" class="label-uppercase">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required class="input-field" />
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="brief" class="label-uppercase">Brief</label>
+          <textarea id="brief" name="brief" placeholder="Tell us about the project." rows="6" required class="input-field resize-none"></textarea>
+        </div>
+
+        <p id="form-error" class="text-danger text-body hidden" role="alert"></p>
+        <p id="form-success" class="text-success text-body hidden">Sent ✓ — We'll be in touch within 48 hours.</p>
+
+        <button type="submit" id="submit-btn" class="btn-primary self-start">Send inquiry</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .input-field {
+    width: 100%;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    padding: 0.75rem 1rem;
+    color: var(--color-primary);
+    font-size: inherit;
+    transition: border-color 200ms;
+  }
+  .input-field:focus { outline: none; border-color: var(--color-accent); }
+  .input-field::placeholder { color: var(--color-text-muted); }
+</style>
+
+<script>
+  const form = document.getElementById('inquiry-form') as HTMLFormElement;
+  const btn = document.getElementById('submit-btn') as HTMLButtonElement;
+  const errorEl = document.getElementById('form-error')!;
+  const successEl = document.getElementById('form-success')!;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(form));
+    if (data.website) return; // honeypot
+
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    errorEl.classList.add('hidden');
+
+    try {
+      const res = await fetch('/api/inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json() as { success: boolean; message: string };
+      if (json.success) {
+        form.reset();
+        successEl.classList.remove('hidden');
+      } else {
+        errorEl.textContent = json.message ?? 'Something went wrong.';
+        errorEl.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = 'Send inquiry';
+      }
+    } catch {
+      errorEl.textContent = 'Network error. Please try again.';
+      errorEl.classList.remove('hidden');
+      btn.disabled = false;
+      btn.textContent = 'Send inquiry';
+    }
+  });
+</script>

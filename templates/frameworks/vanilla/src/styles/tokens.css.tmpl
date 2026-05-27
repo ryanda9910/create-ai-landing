@@ -1,0 +1,25 @@
+:root {
+  --color-bg:           {{PRIMARY_COLOR}};
+  --color-surface:      color-mix(in srgb, {{PRIMARY_COLOR}} 85%, white);
+  --color-border:       color-mix(in srgb, {{PRIMARY_COLOR}} 70%, white);
+
+  --color-primary:      #FFFFFF;
+  --color-text:         rgba(255, 255, 255, 0.85);
+  --color-text-muted:   rgba(255, 255, 255, 0.45);
+
+  --color-accent:       {{ACCENT_COLOR}};
+  --color-success:      #22C55E;
+  --color-danger:       #EF4444;
+
+  --font-display:       Georgia, 'Times New Roman', serif;
+  --font-mono:          'Courier New', Courier, monospace;
+  --font-body:          system-ui, -apple-system, sans-serif;
+
+  --space-1: 4px;   --space-2: 8px;   --space-3: 12px;
+  --space-4: 16px;  --space-6: 24px;  --space-8: 32px;
+  --space-12: 48px; --space-16: 64px; --space-24: 96px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); }

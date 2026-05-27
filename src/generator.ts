@@ -37,11 +37,18 @@ export async function generateProject(
   templatesDir: string,
   targetDir: string,
   vars: Record<string, string>,
+  framework: string,
 ) {
   if (await fs.pathExists(targetDir)) {
     const files = await fs.readdir(targetDir);
     if (files.length > 0) throw new Error(`Directory "${targetDir}" is not empty.`);
   }
 
-  await copyTemplate(templatesDir, targetDir, vars);
+  // 1. Copy shared files (framework-agnostic)
+  const sharedDir = path.join(templatesDir, 'shared');
+  await copyTemplate(sharedDir, targetDir, vars);
+
+  // 2. Copy framework-specific files on top
+  const frameworkDir = path.join(templatesDir, 'frameworks', framework);
+  await copyTemplate(frameworkDir, targetDir, vars);
 }

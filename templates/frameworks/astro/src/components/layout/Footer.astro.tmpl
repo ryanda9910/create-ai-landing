@@ -1,0 +1,45 @@
+---
+import { SITE } from '../../lib/site';
+---
+
+<footer class="border-t border-border bg-bg">
+  <div class="container-page py-16">
+    <div class="grid grid-cols-1 gap-12 md:grid-cols-4">
+      <div class="md:col-span-2">
+        <p class="font-display text-h3 text-primary mb-4">{SITE.name}</p>
+        <p class="text-body text-text-muted max-w-sm">
+          {SITE.city} — operating since {SITE.year}.
+        </p>
+        <address class="not-italic mt-8 text-small text-text-muted">
+          <a href={`mailto:${SITE.email}`} class="hover:text-primary inline-block py-3.5">
+            {SITE.email}
+          </a>
+        </address>
+      </div>
+
+      <div>
+        <p class="label-uppercase">Site</p>
+        <nav aria-label="Footer navigation" class="flex flex-col gap-3">
+          <a href="#works" class="text-body text-text hover:text-primary py-2.5 block">Works</a>
+          <a href="#services" class="text-body text-text hover:text-primary py-2.5 block">Services</a>
+          <a href="#process" class="text-body text-text hover:text-primary py-2.5 block">Process</a>
+          <a href="#contact" class="text-body text-text hover:text-primary py-2.5 block">Contact</a>
+        </nav>
+      </div>
+
+      <div>
+        <p class="label-uppercase">Follow</p>
+        <nav aria-label="Social media links" class="flex flex-col gap-3">
+          {SITE.social.instagram !== '#' && (
+            <a href={SITE.social.instagram} rel="noopener noreferrer" class="text-body text-text hover:text-primary py-2.5 block">Instagram</a>
+          )}
+        </nav>
+      </div>
+    </div>
+
+    <div class="mt-16 pt-8 border-t border-border flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      <p class="text-small text-text-muted font-mono">Built with Astro + Claude Code</p>
+      <p class="text-small text-text-muted">© {SITE.year} {SITE.name}. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,80 @@
+---
+import { SITE } from '../../lib/site';
+
+const NAV_LINKS = [
+  { href: '#works', label: 'Works' },
+  { href: '#services', label: 'Services' },
+  { href: '#process', label: 'Process' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+
+<header class="fixed top-0 z-50 w-full transition-all duration-300" id="site-header">
+  <div class="container-page flex h-20 items-center justify-between">
+    <a href="/" class="font-display text-h3 text-primary hover:text-accent transition-colors py-2 inline-block">
+      {SITE.name}
+    </a>
+
+    <nav aria-label="Main navigation" class="hidden md:flex items-center gap-8">
+      {NAV_LINKS.map((link) => (
+        <a href={link.href} class="text-body text-text hover:text-primary transition-colors">
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <a href="#contact" class="hidden md:inline-flex text-small uppercase tracking-widest text-accent hover:underline">
+      Start a project
+    </a>
+
+    <button
+      class="md:hidden flex h-11 w-11 items-center justify-center text-primary"
+      id="menu-toggle"
+      aria-label="Open menu"
+      aria-expanded="false"
+    >
+      <span id="menu-icon-open">☰</span>
+      <span id="menu-icon-close" class="hidden">✕</span>
+    </button>
+  </div>
+
+  <nav aria-label="Mobile navigation" id="mobile-menu" class="hidden md:hidden border-t border-border bg-bg/95 backdrop-blur-md">
+    <div class="container-page flex flex-col py-8 gap-6">
+      {NAV_LINKS.map((link) => (
+        <a href={link.href} class="text-body-lg text-text hover:text-primary transition-colors mobile-nav-link">
+          {link.label}
+        </a>
+      ))}
+      <a href="#contact" class="label-uppercase text-accent mt-2 mobile-nav-link">Start a project</a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const header = document.getElementById('site-header')!;
+  const toggle = document.getElementById('menu-toggle')!;
+  const menu = document.getElementById('mobile-menu')!;
+  const iconOpen = document.getElementById('menu-icon-open')!;
+  const iconClose = document.getElementById('menu-icon-close')!;
+
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('bg-bg/90', window.scrollY > 32);
+    header.classList.toggle('backdrop-blur-md', window.scrollY > 32);
+  }, { passive: true });
+
+  toggle.addEventListener('click', () => {
+    const open = menu.classList.toggle('hidden');
+    toggle.setAttribute('aria-expanded', String(!open));
+    iconOpen.classList.toggle('hidden', !open);
+    iconClose.classList.toggle('hidden', open);
+  });
+
+  document.querySelectorAll('.mobile-nav-link').forEach((link) => {
+    link.addEventListener('click', () => {
+      menu.classList.add('hidden');
+      toggle.setAttribute('aria-expanded', 'false');
+      iconOpen.classList.remove('hidden');
+      iconClose.classList.add('hidden');
+    });
+  });
+</script>

@@ -1,0 +1,25 @@
+{
+  "name": "{{BRAND_SLUG}}",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "typecheck": "tsc --noEmit",
+    "check:tokens": "tsx scripts/check-design-tokens.ts",
+    "precommit": "pnpm typecheck && pnpm check:tokens"
+  },
+  "dependencies": {
+    "astro": "^4.15.0",
+    "@astrojs/tailwind": "^5.1.0",
+    "tailwindcss": "^3.4.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.0.0"
+  }
+}

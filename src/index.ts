@@ -18,8 +18,18 @@ async function main() {
     placeholder: 'my-landing',
     validate: (v) => (!v ? 'Required.' : undefined),
   }));
-
   if (p.isCancel(projectName)) { p.cancel('Cancelled.'); process.exit(0); }
+
+  const framework = await p.select({
+    message: 'Framework',
+    options: [
+      { value: 'nextjs',     label: 'Next.js 14',        hint: 'App Router, SSR, API routes' },
+      { value: 'astro',      label: 'Astro 4',            hint: 'Static + islands, best Lighthouse scores' },
+      { value: 'vite-react', label: 'Vite + React',       hint: 'SPA, client-side only' },
+      { value: 'vanilla',    label: 'Vanilla JS',          hint: 'No framework, Vite dev server' },
+    ],
+  });
+  if (p.isCancel(framework)) { p.cancel('Cancelled.'); process.exit(0); }
 
   const brandName = await p.text({
     message: 'Brand name',
@@ -38,11 +48,11 @@ async function main() {
   const industry = await p.select({
     message: 'Industry',
     options: [
-      { value: 'music', label: 'Music / Audio Studio' },
-      { value: 'photo', label: 'Photography / Visual' },
-      { value: 'agency', label: 'Creative Agency' },
-      { value: 'saas', label: 'SaaS / Product' },
-      { value: 'other', label: 'Other' },
+      { value: 'music',   label: 'Music / Audio Studio' },
+      { value: 'photo',   label: 'Photography / Visual' },
+      { value: 'agency',  label: 'Creative Agency' },
+      { value: 'saas',    label: 'SaaS / Product' },
+      { value: 'other',   label: 'Other' },
     ],
   });
   if (p.isCancel(industry)) { p.cancel('Cancelled.'); process.exit(0); }
@@ -71,7 +81,7 @@ async function main() {
   if (p.isCancel(accentColor)) { p.cancel('Cancelled.'); process.exit(0); }
 
   const domain = await p.text({
-    message: 'Domain (for OG image)',
+    message: 'Domain (for OG meta)',
     placeholder: 'voltastudio.com',
     validate: (v) => (!v ? 'Required.' : undefined),
   });
@@ -91,20 +101,21 @@ async function main() {
   const templatesDir = path.resolve(__dirname, '..', 'templates');
 
   const vars: Record<string, string> = {
-    BRAND_NAME: brandName as string,
-    BRAND_SLUG: (brandName as string).toLowerCase().replace(/\s+/g, '-'),
-    TAGLINE: tagline as string,
-    INDUSTRY: industry as string,
-    CITY: city as string,
+    BRAND_NAME:    brandName as string,
+    BRAND_SLUG:    (brandName as string).toLowerCase().replace(/\s+/g, '-'),
+    TAGLINE:       tagline as string,
+    INDUSTRY:      industry as string,
+    CITY:          city as string,
     PRIMARY_COLOR: primaryColor as string,
-    ACCENT_COLOR: accentColor as string,
-    DOMAIN: domain as string,
-    EMAIL: email as string,
-    YEAR: new Date().getFullYear().toString(),
+    ACCENT_COLOR:  accentColor as string,
+    DOMAIN:        domain as string,
+    EMAIL:         email as string,
+    YEAR:          new Date().getFullYear().toString(),
+    FRAMEWORK:     framework as string,
   };
 
   try {
-    await generateProject(templatesDir, targetDir, vars);
+    await generateProject(templatesDir, targetDir, vars, framework as string);
     s.stop('Project generated.');
   } catch (err) {
     s.stop('Generation failed.');
@@ -112,20 +123,25 @@ async function main() {
     process.exit(1);
   }
 
+  const installCmd = 'pnpm install';
+  const devCmd = framework === 'nextjs' ? 'pnpm dev' : 'pnpm dev';
+
   p.note(
     [
       `cd ${projectName}`,
-      `pnpm install`,
+      installCmd,
       ``,
       `Then fill in:`,
-      `  DESIGN.md        → your color/type system`,
-      `  src/lib/         → your real content`,
-      `  GUARDRAILS.md    → will fill itself as you build`,
+      `  DESIGN.md        → complete your color/type system`,
+      `  src/lib/         → add your real content`,
+      `  GUARDRAILS.md    → fills itself as you build`,
+      ``,
+      devCmd,
     ].join('\n'),
     'Next steps',
   );
 
-  p.outro(`${pc.green('✓')} ${pc.bold(brandName as string)} landing ready. Build something specific.`);
+  p.outro(`${pc.green('✓')} ${pc.bold(brandName as string)} — ${framework} ready. Build something specific.`);
 }
 
 main();

@@ -18,34 +18,33 @@ Update this file every time you hit a new issue — so the next session doesn't 
 ## Form
 - NEVER submit without server-side validation
 - NEVER trust client-side validation alone
-- ALWAYS use `<form onSubmit>` wrapper — not `<div>` + onClick
+- ALWAYS use a proper `<form>` element with submit handler — not `<div>` + onClick
   (Without this: Enter key broken, autofill broken, screen reader can't identify as form)
 - ALWAYS show errors inline, not alert()
 - Include honeypot field for bot protection
 
 ## Design Tokens
-- NEVER use arbitrary Tailwind values: `bg-[#hex]`, `p-[18px]`
-- NEVER hardcode color/spacing in components
+- NEVER hardcode hex values in components or templates
+- NEVER use arbitrary spacing values outside the defined scale
+- All colors and spacing MUST reference CSS custom properties from tokens.css
 - Run `pnpm check:tokens` before committing
 
 ## Accessibility
 - NEVER skip `prefers-reduced-motion` check for video/animation
 - NEVER use color as the only indicator (add icon/text)
 - `<nav>` MUST have `aria-label` if more than one nav exists on the page
-- All tap targets MUST be ≥44px (WCAG 2.1 SC 2.5.5)
-  Footer links: `py-2.5 block` gives 46px (26px line-height + 20px padding)
-  Email links: `py-3.5 inline-block` gives 46px (18px line-height + 28px padding)
+- All tap/click targets MUST be ≥44px (WCAG 2.1 SC 2.5.5)
 - ALWAYS provide focus-visible state
 
 ## SVG
-- SVG `<text>` elements WILL disappear when routed through Next.js image optimizer
-  Fix: add `unoptimized` prop to next/image (or TreatedImage wrapper) for any SVG with text
-- `dangerouslyAllowSVG: true` in next.config triggers the optimizer — same issue applies
+- SVG `<text>` elements can fail silently when processed by image optimizers
+  Fix: serve SVGs as static files or use `unoptimized` flags in framework image components
+- Avoid relying on system fonts in SVG — use paths or web fonts
 
 ## Performance
-- NEVER load heavy JS libraries (wavesurfer, etc.) in hero — lazy load on scroll
-- NEVER set image quality=100
-- NEVER skip `next/font` (prevents FOUT/FOIT)
+- NEVER load heavy libraries (audio players, charts) at page load — lazy load on scroll/interaction
+- NEVER skip font preloading (causes FOUT/FOIT)
+- ALWAYS test on slow 3G before shipping
 
 ## Claude Code Skills
 - Skills MUST be at `.claude/skills/{name}/SKILL.md` with YAML frontmatter

@@ -1,0 +1,44 @@
+---
+import { SERVICES } from '../../lib/services';
+---
+
+<section id="services" class="py-24 md:py-32">
+  <div class="container-page">
+    <div class="mb-16">
+      <p class="label-uppercase mb-4">Services</p>
+      <h2 class="font-display text-h1 text-primary max-w-xl">What we do.</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-border">
+      {SERVICES.map((service) => (
+        <div class="relative bg-bg p-10 flex flex-col gap-8 group hover:bg-surface transition-all duration-300 service-card">
+          <p class="font-display text-h3 text-primary">{service.title}</p>
+          <p class="text-body text-accent">{service.tagline}</p>
+          <p class="text-body text-text-muted">{service.description}</p>
+          <ul class="flex flex-col gap-2 mt-auto">
+            {service.deliverables.map((d) => (
+              <li class="font-mono text-mono text-text-muted flex gap-2">
+                <span class="text-accent">→</span>
+                <span>{d}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .service-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0;
+    height: 100%; width: 1px;
+    background-color: var(--color-accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 500ms;
+  }
+  .service-card:hover::before { transform: scaleY(1); }
+</style>

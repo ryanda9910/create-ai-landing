@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{BRAND_NAME}}</title>
+    <meta name="description" content="{{TAGLINE}}" />
+    <meta property="og:title" content="{{BRAND_NAME}}" />
+    <meta property="og:description" content="{{TAGLINE}}" />
+    <meta property="og:image" content="/og-image.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="stylesheet" href="/src/styles/tokens.css" />
+    <link rel="stylesheet" href="/src/styles/main.css" />
+  </head>
+  <body>
+    <header id="site-header" class="site-header">
+      <div class="container">
+        <a href="/" class="brand">{{BRAND_NAME}}</a>
+        <nav aria-label="Main navigation" class="nav-desktop">
+          <a href="#works">Works</a>
+          <a href="#services">Services</a>
+          <a href="#process">Process</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <a href="#contact" class="nav-cta">Start a project</a>
+        <button id="menu-toggle" class="menu-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+      </div>
+      <nav aria-label="Mobile navigation" id="mobile-nav" class="mobile-nav hidden">
+        <a href="#works">Works</a>
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#contact">Contact</a>
+        <a href="#contact" class="nav-cta">Start a project</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="hero" class="hero">
+        <div class="hero-bg">
+          <video autoplay muted loop playsinline poster="/images/hero-poster.jpg" class="hero-video motion-safe-only">
+            <source src="/videos/hero-loop.webm" type="video/webm" />
+            <source src="/videos/hero-loop.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="container hero-content">
+          <p class="eyebrow">{{BRAND_NAME}} — {{CITY}}</p>
+          <h1>{{TAGLINE}}</h1>
+          <p class="hero-desc">[Your specific description. Name formats, specs, location.]</p>
+          <div class="hero-ctas">
+            <a href="#contact" class="btn-primary">Start a project</a>
+            <a href="#works" class="btn-secondary">See the work</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services, Process, Contact sections — see src/sections/ -->
+      <div id="sections-mount"></div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <p class="brand">{{BRAND_NAME}}</p>
+          <p class="muted">{{CITY}} — operating since {{YEAR}}.</p>
+          <a href="mailto:{{EMAIL}}" class="footer-email">{{EMAIL}}</a>
+        </div>
+        <div>
+          <p class="eyebrow">Site</p>
+          <nav aria-label="Footer navigation" class="footer-nav">
+            <a href="#works">Works</a>
+            <a href="#services">Services</a>
+            <a href="#process">Process</a>
+            <a href="#contact">Contact</a>
+          </nav>
+        </div>
+      </div>
+      <div class="footer-bottom container">
+        <p class="mono muted">Built with Vite + Claude Code</p>
+        <p class="muted">© {{YEAR}} {{BRAND_NAME}}.</p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
