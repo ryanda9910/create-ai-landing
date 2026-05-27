@@ -26,7 +26,7 @@ npm create crucible@latest my-project
 
 ---
 
-Answer 10 questions. Get a landing page scaffold where AI works inside a design system — not against it.
+Answer 14 questions. Get a landing page scaffold where AI works inside a design system — not against it.
 
 ```
 ┌  crucible
@@ -40,6 +40,12 @@ Answer 10 questions. Get a landing page scaffold where AI works inside a design 
 ◇  UI library
 │  shadcn/ui — Radix + Tailwind component system
 │
+◇  Design aesthetic
+│  Dark Studio — dark bg, cinematic, moody
+│
+◇  Who is this for?
+│  Brand / Organization
+│
 ◇  Brand name
 │  Volta Studio
 │
@@ -49,7 +55,7 @@ Answer 10 questions. Get a landing page scaffold where AI works inside a design 
 ◇  Primary color (hex)
 │  #0A0A0B
 │
-  ... 5 more prompts
+  ... 5 more prompts (industry, city, domain, email, figma url)
 │
 └  ✓ Volta Studio — nextjs scaffold ready. Build something real.
 ```
@@ -111,11 +117,28 @@ Provider setup, `components.json`, and `UI_SETUP.md` are generated per choice �
 |---|---|
 | `BRAND_NAME` | Volta Studio |
 | `TAGLINE` | Every beat tells a story. |
-| `PRIMARY_COLOR` | #1A1A2E |
-| `ACCENT_COLOR` | #E94560 |
+| `PROFILE_TYPE` | `brand` or `individual` — adapts CTA labels and section copy |
+| `DESIGN_THEME` | `dark-studio`, `brutalist`, `glassmorphism`, … — injects aesthetic guidance into DESIGN.md |
+| `PRIMARY_COLOR` | `#1A1A2E` — or auto-extracted from Figma |
+| `ACCENT_COLOR` | `#E94560` — or auto-extracted from Figma |
 | `CITY` | Bandung |
 | `DOMAIN` | voltastudio.com |
 | `EMAIL` | hello@voltastudio.com |
+
+### Design themes
+
+12 world design aesthetics — each injects typography, motion, component, and anti-pattern guidance into `DESIGN.md § 0`:
+
+`minimalist` · `dark-studio` · `brutalist` · `glassmorphism` · `retro` · `editorial` · `corporate` · `playful` · `cyberpunk` · `swiss` · `organic` · `luxury`
+
+### Figma import
+
+```bash
+# Set token in env to skip the prompt:
+FIGMA_TOKEN=fig-pat-... npm create crucible@latest my-project
+```
+
+Provide a Figma file URL at the last prompt. Color styles and text styles are extracted from the file. If style names contain `primary`, `brand`, `accent`, or `cta`, the colors override `PRIMARY_COLOR` / `ACCENT_COLOR` and are written into `tokens.css` and `DESIGN.md`.
 
 ## After scaffolding
 

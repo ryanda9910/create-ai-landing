@@ -29,6 +29,18 @@ features:
     title: 9 UI Libraries
     details: Tailwind (default), shadcn/ui, Ant Design, Material UI, Mantine, Chakra UI, daisyUI, Bootstrap, or plain CSS. Deps injected and providers wired automatically.
 
+  - icon: 🎭
+    title: 12 Design Themes
+    details: Pick a world design aesthetic — minimalist, brutalist, glassmorphism, editorial, cyberpunk, luxury, and 6 more. Typography, motion, and anti-pattern guidance injected into DESIGN.md automatically.
+
+  - icon: 👤
+    title: Brand or Individual
+    details: Scaffold for a studio/company or a personal portfolio. CTA labels, section headers, and DESIGN.md adapt to the profile type automatically.
+
+  - icon: 🖼️
+    title: Figma Import
+    details: Provide a Figma file URL and PAT. Colors and typography extracted from design styles — PRIMARY_COLOR, ACCENT_COLOR, and DESIGN.md populated from your actual design.
+
   - icon: 🤖
     title: AI Skills System
     details: Role-based Claude Code constraints. /copywriter enforces voice rules. /qa-mobile runs the tap-target checklist. /ui-designer enforces design tokens.

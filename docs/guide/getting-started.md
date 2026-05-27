@@ -17,14 +17,16 @@ npm create crucible@latest my-project
 npx create-crucible my-project
 ```
 
-The CLI asks 10 questions:
+The CLI asks 14 questions:
 
 | Question | Example |
 |---|---|
 | Project name | `volta-studio` |
 | Framework | Next.js 14 / Astro 4 / Vite+React / Vanilla JS |
 | UI library | shadcn/ui, Ant Design, MUI, Mantine, Chakra, daisyUI, Bootstrap, None |
-| Brand name | `Volta Studio` |
+| Design aesthetic | minimalist, brutalist, glassmorphism, editorial, luxury, … (12 options) |
+| Who is this for? | Brand / Organization — or — Individual / Personal |
+| Brand / your name | `Volta Studio` or `Alex Chen` |
 | Tagline | `Every frame needs a sound.` |
 | Industry | Music / Photo / Agency / SaaS / Other |
 | City | `Jakarta` |
@@ -32,6 +34,7 @@ The CLI asks 10 questions:
 | Accent color | `#D4A574` |
 | Domain | `voltastudio.com` |
 | Email | `hello@voltastudio.com` |
+| Figma file URL *(optional)* | paste URL → colors + typography auto-extracted |
 
 ## Install and run
 
@@ -74,4 +77,8 @@ Each skill loads role-specific constraints before doing any work.
 
 ::: tip UI library wired automatically
 If you selected a provider-based UI lib (Ant Design, MUI, Mantine, Chakra UI), the provider is already wired into `layout.tsx` / `main.tsx`. Run `pnpm install` and it works.
+:::
+
+::: tip Figma import (optional)
+Provide a Figma file URL at the last prompt. If your Figma styles have names containing "primary", "brand", "accent", or "cta", those colors are extracted and injected into `tokens.css` and `DESIGN.md` automatically. You need a [Personal Access Token](https://www.figma.com/developers/api#access-tokens) or set `FIGMA_TOKEN` in your env.
 :::

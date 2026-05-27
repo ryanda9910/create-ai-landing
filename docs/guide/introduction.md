@@ -46,6 +46,9 @@ Running `npm create crucible@latest my-project` generates:
 6. **Data layer** — `src/lib/site.ts`, `services.ts`, `process.ts` — content separate from markup
 7. **API route** — contact form with Zod validation + honeypot (Next.js)
 8. **UI library** — your chosen lib's deps injected + providers wired
+9. **Design theme notes** — typography, motion, component, and anti-pattern guidance for your chosen aesthetic injected into `DESIGN.md § 0`
+10. **Profile-aware copy** — individual portfolio vs brand/org: CTA labels, section headers, and DESIGN.md adapt to who the page is for
+11. **Figma tokens** *(optional)* — real colors + typography extracted from your Figma file and written into `DESIGN.md` and `tokens.css`
 
 ## Who is it for?
 

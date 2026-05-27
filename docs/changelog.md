@@ -2,6 +2,23 @@
 
 All notable changes documented here. Format: [Keep a Changelog](https://keepachangelog.com/).
 
+## [1.3.0] — 2026-05-27
+
+### Added
+- **Profile types**: brand/organization vs individual/personal — CTA labels, section headers, and DESIGN.md adapt to who the page is for
+- **12 design themes**: minimalist, dark-studio, brutalist, glassmorphism, retro, editorial, corporate, playful, cyberpunk, swiss, organic, luxury — each injects typography, motion, component, and anti-pattern guidance into `DESIGN.md § 0`
+- **Figma import**: optional Figma file URL + PAT — extracts color styles + text styles via Figma REST API; overrides `PRIMARY_COLOR`/`ACCENT_COLOR` and populates `DESIGN.md` color and typography sections
+- New derived template vars: `OWNER_LABEL`, `IDENTITY_LABEL`, `CTA_LABEL`, `CTA_CONTEXT`, `ABOUT_LABEL`, `DESIGN_THEME_NOTES`, `FIGMA_COLORS_SECTION`, `FIGMA_TYPOGRAPHY_SECTION`
+- `src/themes.ts` — 12 ThemeDefinition objects with full aesthetic specs
+- `src/figma.ts` — Figma REST API client with color/text style extraction
+- `FIGMA_TOKEN` env var support (skip PAT prompt)
+- 70 unit tests (up from 48) covering themes, profile types, Figma mock
+- CI: unit test job added between build and e2e
+
+### Changed
+- CLI prompts: 10 → 14 (added design aesthetic, who is this for, Figma URL, Figma PAT)
+- `DESIGN.md` template: new `§ 0` for design theme, `IDENTITY_LABEL`/`CTA_LABEL`/`ABOUT_LABEL` vars throughout
+
 ## [1.1.0] — 2026-05-27
 
 ### Added

@@ -14,6 +14,16 @@ When you run `npm create crucible@latest`, these variables are injected into eve
 | `DOMAIN` | OG meta, `site.ts`, API route |
 | `EMAIL` | Footer, Contact section, `site.ts` |
 | `YEAR` | Footer copyright |
+| `PROFILE_TYPE` | `DESIGN.md` — `brand` or `individual` |
+| `OWNER_LABEL` | derived — `Brand` or `Portfolio` |
+| `IDENTITY_LABEL` | derived — `Brand Identity` or `Identity` |
+| `CTA_LABEL` | derived — `Start a project` or `Work with me` |
+| `CTA_CONTEXT` | `CLAUDE.md` — describes the conversion target |
+| `ABOUT_LABEL` | derived — `Studio / About` or `About` |
+| `DESIGN_THEME` | `DESIGN.md § 0` — theme slug |
+| `DESIGN_THEME_NOTES` | derived — multi-line guidance block for chosen aesthetic |
+| `FIGMA_COLORS_SECTION` | `DESIGN.md § 2` — populated if Figma URL provided, else empty |
+| `FIGMA_TYPOGRAPHY_SECTION` | `DESIGN.md § 3` — populated if Figma URL provided, else empty |
 
 ## What you fill in manually
 

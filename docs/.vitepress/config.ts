@@ -25,7 +25,7 @@ export default defineConfig({
       { text: 'UI Libraries', link: '/guide/ui-libraries' },
       { text: 'Changelog', link: '/changelog' },
       {
-        text: 'v1.1.0',
+        text: 'v1.3.0',
         items: [
           { text: 'npm', link: 'https://www.npmjs.com/package/create-crucible' },
           { text: 'GitHub', link: 'https://github.com/ryanda9910/crucible' },
@@ -56,6 +56,8 @@ export default defineConfig({
         text: 'Customization',
         items: [
           { text: 'Brand & Content', link: '/guide/customization' },
+          { text: 'Design Themes', link: '/guide/design-themes' },
+          { text: 'Figma Import', link: '/guide/figma-import' },
           { text: 'Adding Sections', link: '/guide/adding-sections' },
           { text: 'API Route', link: '/guide/api-route' },
         ],
