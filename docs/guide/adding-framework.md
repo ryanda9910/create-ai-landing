@@ -15,31 +15,32 @@ Every framework template must include:
 | File | Purpose |
 |---|---|
 | `package.json.tmpl` | Dependencies with `{{BRAND_SLUG}}` name |
-| `src/lib/site.ts.tmpl` (or `.js`) | `SITE` object with brand vars |
+| `src/lib/site.ts.tmpl` | `SITE` object with brand vars |
 | `src/lib/services.ts.tmpl` | Services data structure |
-| `src/lib/process.ts.tmpl` | Process steps data structure |
+| `src/lib/process.ts.tmpl` | Process steps |
 | `src/styles/tokens.css.tmpl` | CSS custom properties |
-| Framework config file | `astro.config.mjs`, `vite.config.ts`, etc. |
+| Framework config | `astro.config.mjs`, `vite.config.ts`, etc. |
 | Entry point | `index.html`, `src/app/page.tsx`, etc. |
 | Sections | Hero, Services, Process, Contact components |
-| Layout | Header, Footer components |
+| Layout | Header, Footer |
 
 ## 3. Template variables
 
-Use `{{VAR_NAME}}` syntax in `.tmpl` files. Available variables:
+Use `{{VAR_NAME}}` syntax in `.tmpl` files:
 
 ```
 {{BRAND_NAME}}     Volta Studio
 {{BRAND_SLUG}}     volta-studio
-{{TAGLINE}}        Every beat tells a story.
+{{TAGLINE}}        Every frame needs a sound.
 {{INDUSTRY}}       music
-{{CITY}}           Bandung
-{{PRIMARY_COLOR}}  #1A1A2E
-{{ACCENT_COLOR}}   #E94560
+{{CITY}}           Jakarta
+{{PRIMARY_COLOR}}  #0A0A0B
+{{ACCENT_COLOR}}   #D4A574
 {{DOMAIN}}         voltastudio.com
 {{EMAIL}}          hello@voltastudio.com
 {{YEAR}}           2026
 {{FRAMEWORK}}      your-framework
+{{UI_LIB}}         tailwind
 ```
 
 Files without `.tmpl` extension are copied as-is.
@@ -52,17 +53,19 @@ Add to the `framework` select in `src/index.ts`:
 { value: 'your-framework', label: 'Framework Name', hint: 'Short description' },
 ```
 
-## 5. Add generator test
-
-In `src/test-generator.ts`, add your framework to the checks:
+Also add UI lib options for the new framework in the `UI_LIB_OPTIONS` map:
 
 ```ts
-'your-framework': ['CLAUDE.md', 'DESIGN.md', 'package.json', 'your-entry-file'],
+'your-framework': [
+  { value: 'tailwind',  label: 'Tailwind CSS',  hint: 'default' },
+  // add compatible libs
+  { value: 'none',      label: 'None',           hint: 'plain CSS' },
+],
 ```
 
-## 6. Shared files (don't duplicate)
+## 5. Shared files (don't duplicate)
 
-The following come from `templates/shared/` and don't need to be in your framework template:
+These come from `templates/shared/` — don't include them in your framework template:
 
 - `CLAUDE.md.tmpl`
 - `DESIGN.md.tmpl`
@@ -71,21 +74,22 @@ The following come from `templates/shared/` and don't need to be in your framewo
 - `docs/DESIGN-DECISIONS.md.tmpl`
 - `scripts/check-design-tokens.ts`
 
-## 7. Key requirements
+## 6. Key requirements
 
 All framework templates must:
 - Use CSS custom properties from `tokens.css` (no hardcoded hex)
 - Include `aria-label` on all `<nav>` elements
 - Wrap contact form in `<form>` with submit handler
 - Respect `prefers-reduced-motion` on video/animation
-- Have all tap targets ≥44px
+- All tap targets ≥44px
+
+## 7. Documentation
+
+Add a section to `docs/guide/frameworks.md` with:
+- Use case
+- Configuration summary
+- CLI command
 
 ## 8. Submit PR
-
-PR must include:
-- Template files
-- CLI entry
-- Docs entry in `frameworks.md`
-- Test case
 
 See [Contributing](/guide/contributing) for the full PR process.

@@ -18,10 +18,10 @@ export default defineConfig({
 
     nav: [
       { text: 'Guide', link: '/guide/getting-started' },
-      { text: 'Frameworks', link: '/guide/frameworks' },
+      { text: 'UI Libraries', link: '/guide/ui-libraries' },
       { text: 'Changelog', link: '/changelog' },
       {
-        text: 'v1.0.0',
+        text: 'v1.1.0',
         items: [
           { text: 'npm', link: 'https://www.npmjs.com/package/create-crucible' },
           { text: 'GitHub', link: 'https://github.com/ryanda9910/crucible' },
@@ -36,6 +36,7 @@ export default defineConfig({
           { text: 'Introduction', link: '/guide/introduction' },
           { text: 'Quick Start', link: '/guide/getting-started' },
           { text: 'Frameworks', link: '/guide/frameworks' },
+          { text: 'UI Libraries', link: '/guide/ui-libraries' },
         ],
       },
       {
@@ -60,6 +61,7 @@ export default defineConfig({
         items: [
           { text: 'How to Contribute', link: '/guide/contributing' },
           { text: 'Adding a Framework', link: '/guide/adding-framework' },
+          { text: 'Adding a UI Library', link: '/guide/adding-ui-library' },
         ],
       },
     ],

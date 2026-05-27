@@ -2,7 +2,7 @@
 
 ## What's pre-filled by the CLI
 
-When you run `npx @ryanda9910/create-ai-landing`, these variables are injected into every file:
+When you run `npm create crucible@latest`, these variables are injected into every file:
 
 | Variable | Where it appears |
 |---|---|

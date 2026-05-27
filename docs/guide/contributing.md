@@ -5,8 +5,8 @@ Contributions are welcome. This project values specificity — if you open a PR,
 ## Development setup
 
 ```bash
-git clone https://github.com/ryanda9910/create-ai-landing.git
-cd create-ai-landing
+git clone https://github.com/ryanda9910/crucible.git
+cd crucible
 pnpm install
 ```
 
@@ -15,7 +15,7 @@ Test the CLI locally:
 pnpm dev          # runs tsx src/index.ts
 ```
 
-Test the generator:
+Test scaffolding directly:
 ```bash
 pnpm tsx src/index.ts /tmp/test-project
 ```
@@ -25,8 +25,6 @@ pnpm tsx src/index.ts /tmp/test-project
 This project uses [Conventional Commits](https://www.conventionalcommits.org/).
 
 ```
-type(scope): subject
-
 feat(cli): add vue framework option
 fix(generator): handle empty target directory
 docs(readme): update quick start example
@@ -35,19 +33,19 @@ chore(deps): bump vitepress to 1.6.0
 
 Allowed types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `ci`, `revert`
 
-Commitlint runs on every commit via Husky.
+Commitlint enforces this on every commit via Husky.
 
 ## What to contribute
 
-### High value
-- **New framework template** — See [Adding a Framework](/guide/adding-framework)
-- **Bug fix** — With a reproduction case
-- **GUARDRAILS entry** — A failure pattern you discovered and documented
+**High value:**
+- New framework template — see [Adding a Framework](/guide/adding-framework)
+- New UI library — see [Adding a UI Library](/guide/adding-ui-library)
+- Bug fix with a reproduction case
+- GUARDRAILS entry — a failure pattern you found and documented
 
-### Lower priority
+**Lower priority:**
 - Refactoring without behavior change
 - New features without a clear use case
-- Style-only changes
 
 ## PR process
 
@@ -59,16 +57,18 @@ Commitlint runs on every commit via Husky.
 
 PRs that add a framework must include:
 - Template files in `templates/frameworks/{name}/`
-- Framework entry in the CLI `select` prompt (`src/index.ts`)
-- Documentation page in `docs/guide/frameworks.md`
-- Generator test case
+- Framework entry in `src/index.ts`
+- Documentation update in `docs/guide/frameworks.md`
+
+PRs that add a UI library must include:
+- `templates/ui-libs/{name}/_config.json`
+- Overlay files where needed (providers, config)
+- Documentation update in `docs/guide/ui-libraries.md`
 
 ## Reporting bugs
 
-Use the [bug report template](https://github.com/ryanda9910/create-ai-landing/issues/new?template=bug_report.md).
-
 Include:
-- CLI version (`npx @ryanda9910/create-ai-landing --version`)
-- Framework selected
+- CLI version: `npx create-crucible --version`
+- Framework + UI lib selected
 - Node.js version
 - Steps to reproduce
